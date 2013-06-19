@@ -11,11 +11,13 @@ import org.mule.transport.jdbc.sqlstrategy.DefaultSqlStatementStrategyFactory;
 public class ExtendedSqlStatementStrategyFactory extends DefaultSqlStatementStrategyFactory
 {
     protected SimpleCreateSqlStatementStrategy simpleCreateSQLStrategy;
+    protected SimpleInsertSqlStatementStrategy simpleInsertSQLStrategy;
     
     public ExtendedSqlStatementStrategyFactory()
     {
     	super();
     	simpleCreateSQLStrategy = new SimpleCreateSqlStatementStrategy();
+        simpleInsertSQLStrategy = new SimpleInsertSqlStatementStrategy();
     }
 
     public SqlStatementStrategy create(String sql, Object payload)
@@ -26,6 +28,10 @@ public class ExtendedSqlStatementStrategyFactory extends DefaultSqlStatementStra
         if(sqlLowerCase.startsWith("create"))
         {
                 return simpleCreateSQLStrategy;
+        }
+        else if(sqlLowerCase.startsWith("insert"))
+        {
+                return simpleInsertSQLStrategy;
         }
         else
         {
